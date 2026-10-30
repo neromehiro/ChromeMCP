@@ -1,21 +1,19 @@
-# External runtime boundary
+# Component provenance
 
-ChromeMCP contains the local transport, host adapters, extension connection UI, build scripts, and tests.
-It relies on runtime components originally supplied with an external desktop application.
-The tested browser component version is 1.26.901.11451.
+ChromeMCP includes local Python MCP/transport adapters and extension connection UI.
+The browser engine, extension backend, accessibility WASM, content scripts and image assets originate from desktop browser components version 1.26.901.11451.
 
-The following are intentionally absent from Git:
+- `upstream/browser-engine.mjs`: preserved browser service implementation with appended exports.
+- `upstream/extension-core.js`: extension backend with local transport entry points; original app bootstrap omitted.
+- `upstream/browser-accessibility.wasm.br`, `content-scripts/*`, `images/*`: original components.
+- `upstream/local-host.mjs`, `upstream/engine-worker.mjs`: local host and command adapters.
 
-- Original or transformed browser service, browser client, extension backend, accessibility WASM
-- Original content scripts and cursor/icon assets
-- Node REPL executable, Node executable, and bundled dependencies
-- Generated unpacked extension and original source snapshots
+`vendor-lock.json` records hashes from the original bridge snapshot; `distribution-assets.json` defines the packaged files.
+These components are not presented as independently authored ChromeMCP code or relicensed under MIT.
+No blanket open-source license is assigned by this repository. Original third-party rights and applicable terms remain with their owners.
+ChromeMCP is not an official OpenAI or Google product.
 
-`vendor-lock.json` contains hashes, not the external components themselves.
-`scripts/import_runtime.py` imports a fixed list from an existing local installation prepared for this bridge.
-It does not download external components or grant redistribution rights.
-`build_upstream.py` records the pinned transformations for developers with the corresponding local source snapshot;
-it is not a downloader or a general extractor for arbitrary application versions.
+Node.js, Python, `mcp` and `websockets` are separately installed dependencies with their own licenses.
+Desktop application executables, Node REPL executables, account data and private parent-project source are not included or needed by the standard MCP entry point.
 
-Python dependencies (`mcp`, `websockets`) are installed separately under their respective licenses.
-Project-specific source is publicly visible, but no blanket open-source license has yet been assigned.
+The standalone adapter enables its declared browser-management API locally rather than consulting the desktop app feature-flag service. Original origin-consent and policy evaluation remain active, with permission requests forwarded to the MCP client.

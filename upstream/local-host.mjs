@@ -5,6 +5,8 @@ import {dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {AsyncLocalStorage} from 'node:async_hooks';
 import {randomUUID} from 'node:crypto';
+import {homedir} from 'node:os';
+import {join} from 'node:path';
 import {BrowserSessionClient,OriginalBrowserContext,browserPreference,enrichProfileInfo,OriginalBrowserRpcService,setupService,ConfigProvider,HostFilesystem,CommandTiming,PerformanceSpan,CommandSchemas,configureBrowserInfo} from './browser-engine.mjs';
 
 // Translate the compatibility API's per-request window_id to the existing
@@ -31,7 +33,7 @@ class LocalBrowserContext extends OriginalBrowserContext {
   }
 }
 
-const configPath=fileURLToPath(new URL('../.runtime/browser-policy.json',import.meta.url));
+const configPath=process.env.CHROME_MCP_POLICY_PATH || join(homedir(), '.chromemcp', 'browser-policy.json');
 class LocalConfig {
   // Preserve the installed bridge's consent for trusted local clients. Never
   // invent elicitation replies. Original URL checks and configured denials run.

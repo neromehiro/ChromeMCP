@@ -1,0 +1,20 @@
+[
+  "background.js",
+  "content-scripts/codex.js",
+  "content-scripts/foreign-frame-monitor.js",
+  "extension-inventory.js",
+  "images/cursor-chat.png",
+  "images/icon128.png",
+  "manifest.json",
+  "package.json",
+  "popup.css",
+  "popup.html",
+  "popup.js",
+  "transport-buffer.js",
+  "upstream-adapter.js",
+  "upstream/browser-accessibility.wasm.br",
+  "upstream/browser-engine.mjs",
+  "upstream/engine-worker.mjs",
+  "upstream/extension-core.js",
+  "upstream/local-host.mjs"
+]

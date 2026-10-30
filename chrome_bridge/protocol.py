@@ -3,8 +3,9 @@ import base64
 import hashlib
 import json
 
-ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_PORT = 8766
+PACKAGE = Path(__file__).resolve().parent
+ROOT = PACKAGE / "assets" if (PACKAGE / "assets").is_dir() else PACKAGE.parent
+DEFAULT_PORT = 8768
 ACTIONS = frozenset({
     "tabs_list", "tab_open", "tab_navigate", "tab_focus", "tab_close",
     "tab_reload", "tab_back", "tab_forward", "google_search",

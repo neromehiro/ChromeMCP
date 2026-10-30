@@ -12,12 +12,25 @@ _direct_turn = str(uuid.uuid4())
 _owner_id = str(uuid.uuid4())
 
 
-async def request(method: str, params: dict | None = None, port: int = DEFAULT_PORT):
+async def request(method: str, params: dict | None = None, port: int = DEFAULT_PORT, elicitation_callback=None):
     try:
         async with connect(f"ws://127.0.0.1:{port}/client", max_size=32 * 1024 * 1024, open_timeout=3) as socket:
             request_id = str(uuid.uuid4())
             await socket.send(json.dumps({"id": request_id, "method": method, "params": params or {}}, ensure_ascii=False))
-            response = json.loads(await asyncio.wait_for(socket.recv(), 95))
+            while True:
+                response = json.loads(await asyncio.wait_for(socket.recv(), 95))
+                if response.get('type') == 'elicitation':
+                    reply = {'id': str(uuid.uuid4()), 'method': 'elicitation_reply',
+                             'params': {'elicitation_id': response['elicitation_id']}}
+                    try:
+                        if elicitation_callback is None:
+                            raise RuntimeError('This MCP client does not support browser permission requests.')
+                        reply['params']['result'] = await elicitation_callback(response['request'])
+                    except Exception as exc:
+                        reply['params']['error'] = str(exc)
+                    await socket.send(json.dumps(reply))
+                elif response.get('id') == request_id:
+                    break
             if response.get("id") != request_id:
                 raise BridgeError("BAD_RESPONSE", "Bridge response ID does not match")
             if "error" in response:
@@ -28,10 +41,11 @@ async def request(method: str, params: dict | None = None, port: int = DEFAULT_P
         raise BridgeError("BRIDGE_OFFLINE", f"ローカルサーバーが未起動です。chrome-bridge serve を起動してください（port={port}）。") from exc
 
 
-async def browser_call(action: str, arguments: dict | None = None, browser_id: str | None = None, port: int = DEFAULT_PORT):
+async def browser_call(action: str, arguments: dict | None = None, browser_id: str | None = None, port: int = DEFAULT_PORT, elicitation_callback=None):
     params = {"session_id": _direct_session, "turn_id": _direct_turn, **(arguments or {})}
     return await request("call", {"action": action, "arguments": params, "browser_id": browser_id,
-                                  "owner_pid": os.getpid(), "owner_id": _owner_id}, port)
+                                  "owner_pid": os.getpid(), "owner_id": _owner_id,
+                                  "supports_elicitation": elicitation_callback is not None}, port, elicitation_callback)
 
 
 async def require_existing_connection(browser_id: str | None = None, port: int = DEFAULT_PORT):

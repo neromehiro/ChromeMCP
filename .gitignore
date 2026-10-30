@@ -12,12 +12,10 @@ output/
 evidence/
 .playwright-cli/
 extension/
-content-scripts/
-images/
 comparison/
 upstream/browser-*.mjs
-upstream/browser-accessibility.wasm.br
-upstream/extension-core.js
 upstream/provenance.json
 *.log
 .DS_Store
+
+!upstream/browser-engine.mjs

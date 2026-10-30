@@ -1,7 +1,7 @@
 const $ = id => document.getElementById(id);
 const config = await chrome.storage.local.get(["label", "port", "max_agent_tabs"]);
 $("label").value = config.label || "Chrome";
-$("port").value = config.port || 8766;
+$("port").value = config.port || 8768;
 $("tab-limit").value=config.max_agent_tabs||32;
 let selected=new Map();
 

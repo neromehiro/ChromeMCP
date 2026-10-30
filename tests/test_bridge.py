@@ -217,7 +217,7 @@ class BridgeTests(unittest.IsolatedAsyncioTestCase):
         async with stdio_client(params) as (read, write):
             async with ClientSession(read, write) as session:
                 initialized = await session.initialize()
-                self.assertEqual(initialized.serverInfo.name, "local-chrome-bridge")
+                self.assertEqual(initialized.serverInfo.name, "ChromeMCP")
                 names = [tool.name for tool in (await session.list_tools()).tools]
                 self.assertIn("browser_screenshot", names)
                 result = await session.call_tool("browser_search", {"query": "こんにちは"})

@@ -31,8 +31,9 @@ class Browser:
 
 
 class Bridge:
-    def __init__(self, port: int = DEFAULT_PORT):
+    def __init__(self, port: int = DEFAULT_PORT, *, native: bool = True):
         self.port = port
+        self.native = native
         self.browsers: dict[str, Browser] = {}
         self.pending: dict[str, tuple[object, asyncio.Future]] = {}
         self.origin = "chrome-extension://" + extension_id()
@@ -85,7 +86,8 @@ class Bridge:
                 await previous.socket.close(1000, "Replaced by reconnected extension")
             browser = Browser(instance, label, socket, time.time(), str(hello.get("version","unknown")))
             self.browsers[instance] = browser
-            browser.native_endpoint=NativeEndpoint(self,browser);await browser.native_endpoint.start()
+            if self.native:
+                browser.native_endpoint=NativeEndpoint(self,browser);await browser.native_endpoint.start()
             await socket.send(json.dumps({"type": "welcome", "protocol": 1}))
             log.info("Chrome extension connected: %s (%s)", label, instance)
             async for raw in socket:
@@ -94,7 +96,8 @@ class Bridge:
                     await socket.send('{"type":"heartbeat_ack"}')
                 elif message.get("type") == "upstream_event":
                     values=(message['value'],) if 'value' in message else ()
-                    await browser.native_endpoint.event(message['name'],*values)
+                    if browser.native_endpoint:
+                        await browser.native_endpoint.event(message['name'],*values)
                     await self.engine.event(browser,message['name'],*values)
                     await asyncio.gather(*(engine.event(browser,message['name'],*values) for engine in tuple(self.engines.values())))
                 elif message.get("type") == "response":
@@ -136,6 +139,7 @@ class Bridge:
             return await self.owners.end_native_turn(sid, tid)
         if method == "status":
             return {
+                "product": "ChromeMCP",
                 "protocol": 1,
                 "extension_id": extension_id(),
                 "managed_sessions": len(self.owners.leases),
@@ -176,7 +180,7 @@ class Bridge:
         arguments = params.get("arguments", {})
         if not isinstance(arguments, dict):
             raise BridgeError("BAD_REQUEST", "arguments must be an object")
-        if browser.version.startswith(('0.3.','0.4.','0.5.')) and action in ENGINE_ACTIONS:
+        if browser.version.startswith(('0.3.','0.4.','0.5.','0.6.')) and action in ENGINE_ACTIONS:
             context = {k: arguments[k] for k in ('session_id', 'turn_id') if k in arguments}
             async def cleanup():
                 current = self.browsers.get(browser.id)

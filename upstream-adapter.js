@@ -32,7 +32,9 @@ function core() {
     upstream.observeTabMentionInvalidations(invalidate);
     mentionProvider.subscribeInvalidations(invalidate);
   });
-  return backend ||= new upstream.BrowserBackend({browserTabMentionProvider:mentionProvider,webMcpConfig:upstream.webMcpConfig(),browserManagementEnabled:upstream.featureGate('codex-app-chrome-extension-browser-management').catch(()=>false),agentPopupInterceptorEnabled:upstream.featureGate('codex-app-chrome-extension-background-popups').catch(()=>false)});
+  // Standalone extension declares its management APIs locally; no app feature-flag service.
+  // The service still applies origin consent and configured policy to commands.
+  return backend ||= new upstream.BrowserBackend({browserTabMentionProvider:mentionProvider,webMcpConfig:upstream.webMcpConfig(),browserManagementEnabled:Promise.resolve(true),agentPopupInterceptorEnabled:upstream.featureGate('codex-app-chrome-extension-background-popups').catch(()=>false)});
 }
 function originalRequestHandlers(){
   rpcBridge ||= new upstream.BrowserRpcBridge({setMessageCallback(){},sendMessage(message){

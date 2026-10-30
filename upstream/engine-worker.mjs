@@ -86,7 +86,7 @@ async function run(m){
     if(action==='page_select'){await tab('playwright_locator_select_option',{selector:a.selector,selections:a.selections});return {selected:true};}
     if(action==='page_check'){await tab('playwright_locator_set_checked',{selector:a.selector,checked:a.checked});return {checked:a.checked};}
     if((action==='page_click'||action==='page_fill')&&a.selector){
-      await tab(action==='page_click'?'playwright_locator_click':'playwright_locator_fill',{selector:a.selector,value:a.value,timeout_ms:a.timeout_ms,button:a.button,modifiers:a.modifiers});
+      await tab(action==='page_click'?'playwright_locator_click':'playwright_locator_fill',{selector:a.selector,value:a.value,replace:true,timeout_ms:a.timeout_ms,button:a.button,modifiers:a.modifiers});
       return action==='page_click'?{clicked:true}:{filled:true};
     }
     const actions={

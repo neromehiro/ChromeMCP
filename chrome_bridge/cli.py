@@ -41,7 +41,10 @@ def main():
     parser.add_argument("--port", type=int, default=int(os.environ.get("CHROME_BRIDGE_PORT", DEFAULT_PORT)))
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("serve", help="Start the local loopback WebSocket bridge")
-    for name in ("mcp", "mcp-native", "mcp-upstream"):
+    sub.add_parser("mcp", help="Start the MCP server and local bridge automatically")
+    extension = sub.add_parser("extension", help="Export the bundled Chrome extension")
+    extension.add_argument("destination", type=Path)
+    for name in ("mcp-native", "mcp-upstream"):
         child = sub.add_parser(name, help="Original Node REPL MCP with a selectable host config source")
         child.add_argument("--config-source", choices=("codex", "local"), default="codex")
         child.add_argument("--policy-file", type=Path, help="Local host policy JSON (with --config-source local)")
@@ -60,7 +63,17 @@ def main():
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         parser.error("port must be between 1024 and 65535")
-    if args.command in {'mcp','mcp-native','mcp-upstream'}:
+    if args.command == 'extension':
+        from .distribution import export_extension
+        print(export_extension(args.destination))
+        return
+    if args.command == 'mcp':
+        from .mcp_server import run
+        os.environ['CHROME_BRIDGE_PORT'] = str(args.port)
+        os.environ['CHROME_MCP_AUTOSTART'] = '1'
+        run()
+        return
+    if args.command in {'mcp-native','mcp-upstream'}:
         from .native_mcp import run
         if args.policy_file and args.config_source != 'local':
             parser.error('--policy-file requires --config-source local')

@@ -13,7 +13,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: python -m pip install -e .
+      - run: python -m pip install -e . build
       - run: python -m unittest discover -s tests -p 'test_*.py'
-      - run: node --test tests/local-config.test.js tests/transport-buffer.test.js
+      - run: python run_js_tests.py
       - run: python scripts/check_publication.py
+      - run: python -m build
+      - name: Verify installed wheel assets
+        run: |
+          python -m venv /tmp/chromemcp-install
+          /tmp/chromemcp-install/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/chromemcp-install/bin/chromemcp extension /tmp/chromemcp-extension
+          test -f /tmp/chromemcp-extension/upstream/extension-core.js

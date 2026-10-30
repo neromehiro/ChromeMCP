@@ -50,7 +50,7 @@ async function connectOnce() {
   // The original getInfo/profile reader uses this storage key.
   await chrome.storage.local.set({instance_id: instance,extensionInstanceId:instance});
   if (epoch !== connectionEpoch) return;
-  const port = Number(config.port) || 8766;
+  const port = Number(config.port) || 8768;
   if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error("Invalid bridge port");
   state = {...state, instance_id: instance, label: config.label || "Chrome", endpoint: `ws://127.0.0.1:${port}/extension`};
   const connection = new WebSocket(state.endpoint);

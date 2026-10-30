@@ -2,8 +2,8 @@
 
 - Use Standard mode. Never enable Fast mode or a priority service tier.
 - Do not spawn subagents.
-- Keep browser behavior in the pinned upstream runtime. Do not invent replacement behavior.
-- External runtime files, generated extension builds, browser data, and local configuration must remain ignored.
-- Never commit third-party runtime bundles or an enclosing project’s Git history.
+- Keep existing browser operation behavior when packaging for standard MCP clients.
+- Generated extension builds, executables, browser data and local configuration must remain ignored.
+- Publish only the browser components listed in distribution-assets.json with provenance. Never include an enclosing project’s history or application executables.
 - Run `python3 scripts/check_publication.py` before publishing.
-- Install from a source checkout with `pip install -e .`; the runtime uses files adjacent to the Python package.
+- Verify the built wheel outside the source checkout; normal pip installation must work.

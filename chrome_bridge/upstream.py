@@ -46,9 +46,6 @@ class UpstreamEngine:
                 return
             local = ROOT/'.runtime/node'
             node = os.environ.get('CHROME_BRIDGE_NODE') or (str(local) if local.exists() else shutil.which('node'))
-            bundled = '/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node'
-            if Path(bundled).exists() and not local.exists() and not os.environ.get('CHROME_BRIDGE_NODE'):
-                node = bundled
             if not node:
                 raise BridgeError('NODE_REQUIRED','Node.js 22以降をインストールしてください。')
             self.process = await asyncio.create_subprocess_exec(
