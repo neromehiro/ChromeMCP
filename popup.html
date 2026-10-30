@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ChromeMCP</title><link rel="stylesheet" href="popup.css"></head>
+<body><h1>ChromeMCP</h1><div id="status" role="status">確認中…</div>
+<p class="caption">このChromeプロファイルを、ローカルのPythonから操作します。</p>
+<label>プロファイル表示名<input id="label" maxlength="80" placeholder="個人 / 大学 / アイドマ"></label>
+<label>ローカルポート<input id="port" type="number" min="1024" max="65535" value="8766"></label>
+<label>自動化タブの上限<input id="tab-limit" type="number" min="1" max="512" value="32"></label>
+<div class="buttons"><button id="connect">保存して接続</button><button id="pause">一時停止</button></div>
+<p id="error"></p><code id="endpoint"></code><small id="instance"></small>
+<h2>ブラウザ操作セッション</h2><div id="sessions"></div>
+<h2>このプロファイルのタブ</h2>
+<p id="tab-summary" role="status">確認中…</p>
+<p class="caption">保存・引き継ぎ指定のタブは保護します。実行中のタブは、先に作業を終了してください。既存タブは自動では閉じません。</p>
+<button id="refresh-tabs">一覧を更新</button>
+<div id="tabs"></div>
+<button id="close-tabs" disabled>選択したタブを閉じる</button>
+<script type="module" src="popup.js"></script></body></html>

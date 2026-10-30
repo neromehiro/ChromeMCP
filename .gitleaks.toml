@@ -1,0 +1,11 @@
+[extend]
+useDefault = true
+
+# Chrome manifest.key is a public RSA key that fixes the extension ID.
+# It is not a credential. Only this exact public value is allowlisted.
+[[allowlists]]
+description = "Chrome extension public key"
+regexTarget = "secret"
+regexes = [
+    'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuhr\+iJL4KwGiveLRRWmspfRkvdQ3hjmTcLAieJakAYhEn5xwVSVwXIWVRfGLhJCzK2hH4piUw97v2Ab\+JZap1sa\+bmtRJp6\+YTbiIqpyCWf4U4nHUTL3I2LIeIqlYmNGReQyKbBsI53IFZpHYbofMhqaD1WsssqgFsGzxgtYFzH\+wmVWtWm1O/v4sPKWmeYIkZxXszIIGgLuXfXExFNodxu2ObwHSXzfhs5Jtl\+eCgdbxO5\+FL7DOPt2dOVSgFoAOBqaMw9jbMUO0xRwvegao4Ef82llNgOljL9JsAhMKBGIaUJMW4P7dKimdhYAgKnXreQhY56CHB45/AiVqBNSwwIDAQAB'
+]

@@ -1,0 +1,16 @@
+{
+  "upstream_version": "1.26.901.11451",
+  "sha256": {
+    "upstream/browser-service.raw.mjs": "f8a635aa499270c84d8de7a68e93bb47c868cc7aef3c40c5f665327bc7d85407",
+    "upstream/browser-service.local.mjs": "b746fe4a4371d1b79af57fec39cf9d461226f9094dd1fd1d2918ba499dea7362",
+    "upstream/browser-engine.mjs": "3f9f7320d78612e4afaa6f9475baaf05e82ced11832fcc816fc574a654f2648e",
+    "upstream/browser-client.mjs": "6d69679779cbdac432056c7b4c7cd8a84954711bcaa401d232e87e74f5bee856",
+    "upstream/browser-accessibility.wasm.br": "97d2773f1f0d3f890e2dc8bbf7da5745cfb9c2686d893579ffc35bb9608185ee",
+    "upstream/extension-core.js": "f984f04459d5cb296ab7fca56f81fe21ba4a93762134b8aca25388e74d1c3cb8",
+    "content-scripts/codex.js": "d01bc3fd8c98fb5c7a42cf6f465a8e27e24d436b2d4304df2ef38c027f54cc70",
+    "content-scripts/foreign-frame-monitor.js": "337ad4ff3ec7846134e5d39528936b1cbb68107de3c4da0e0641c712bda66129",
+    "images/cursor-chat.png": "c575bc277bab1b09518433aa465be98a8c04b305fe78ed674bf016bfa350e491",
+    "images/icon128.png": "b7f651ebd6b9a7b77f264772cbed3e9d9e121fe7d081ce7a19b2625b4bc3888e",
+    ".runtime/node_repl": "9990e1b5b1227e010dc0f6b8bfd98607a8dbe69c5218f4996321eb8cb610c7a9"
+  }
+}

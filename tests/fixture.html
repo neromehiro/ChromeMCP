@@ -1,0 +1,11 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><title>Local Chrome Bridge — interaction test</title>
+<style>body{font:20px system-ui;margin:60px;max-width:700px}input,button{font:inherit;padding:12px;margin:8px}#result{display:none;padding:24px;background:#dbf2e6}</style>
+<h1>Local Chrome Bridge 動作確認</h1>
+<label>テスト入力<input id="entry" aria-label="テスト入力"></label>
+<label>テスト用password<input type="password" aria-label="テスト用password" value="local-test-secret"></label>
+<button id="run">実行</button><p id="status">入力イベント待ち</p><h2 id="result"></h2>
+<script>
+const input=document.getElementById('entry');
+input.addEventListener('input',()=>{document.getElementById('status').textContent='入力イベント受信:'+input.value;});
+document.getElementById('run').addEventListener('click',()=>{setTimeout(()=>{const result=document.getElementById('result');result.textContent='クリック成功:'+input.value;result.style.display='block';},50);});
+</script></html>
