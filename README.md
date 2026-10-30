@@ -11,7 +11,7 @@ Python・Node.js・Chromeがあれば利用できます。別アプリのイン�
 macOSで検証しています。Linux・Windowsは実機未検証です。
 
 ```sh
-python3 -m pip install "https://github.com/neromehiro/ChromeMCP/releases/download/v0.6.0/chromemcp-0.6.0-py3-none-any.whl"
+python3 -m pip install "https://github.com/neromehiro/ChromeMCP/releases/download/v0.6.1/chromemcp-0.6.1-py3-none-any.whl"
 chromemcp extension ./ChromeMCP-extension
 ```
 

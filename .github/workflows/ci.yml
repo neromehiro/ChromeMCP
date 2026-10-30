@@ -18,6 +18,7 @@ jobs:
       - run: python run_js_tests.py
       - run: python scripts/check_publication.py
       - run: python -m build
+      - run: python scripts/check_dist.py
       - name: Verify installed wheel assets
         run: |
           python -m venv /tmp/chromemcp-install

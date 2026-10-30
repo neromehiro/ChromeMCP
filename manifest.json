@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ChromeMCP",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Control your local Chrome from OpenCode or any MCP client.",
   "minimum_chrome_version": "125",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7zoCKFrmNpNzrN/AMKDC2OmX2pjr3q6ys71pA8DHxDL5PKSQRjNCXFwKpl9mVMGqVi8Zf1/9bE0QIm1SnZ5KompkIJRC2RCSOVL5OomrEjWJkPJ+UXjlngxX76Ii3HUypwUXiEmZKfn8Fz0lxPfelC7o2GBXeDVpVY+lwKV+UK21JpBzV2b1DLMKaM+93B/ePEK2Q2Qg9cwv7JrTyGDSfg5R0XnSdjQqB0YZLgv4iDiWHbuEkCKPCYroG8XfqMO2k6iPsspKL7NEVlokMRcAMC3MmxBjXQ6XprJNNrWiOFWtSImau762p/skneYFHB/4ZXHgAfM38ierlma5bWDhZwIDAQAB",

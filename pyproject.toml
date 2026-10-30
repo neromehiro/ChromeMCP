@@ -1,6 +1,6 @@
 [project]
 name = "chromemcp"
-version = "0.6.0"
+version = "0.6.1"
 description = "ChromeMCP: local Chrome automation for OpenCode and MCP clients"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -43,4 +43,4 @@ packages = ["chrome_bridge"]
 
 [tool.hatch.build.targets.sdist]
 include = ["chrome_bridge", "tests", "scripts", "upstream", "content-scripts", "images", "*.js", "*.json", "*.html", "*.css", "*.py", "*.md", "*.toml"]
-artifacts = ["background.js", "content-scripts/codex.js", "content-scripts/foreign-frame-monitor.js", "extension-inventory.js", "images/cursor-chat.png", "images/icon128.png", "manifest.json", "package.json", "popup.css", "popup.html", "popup.js", "transport-buffer.js", "upstream-adapter.js", "upstream/browser-accessibility.wasm.br", "upstream/browser-engine.mjs", "upstream/engine-worker.mjs", "upstream/extension-core.js", "upstream/local-host.mjs"]
+exclude = ["/.local", "/.runtime", "/.venv", "/node_modules", "/extension", "/dist", "/comparison"]
